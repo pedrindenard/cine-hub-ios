@@ -1,0 +1,30 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Discovery" : {
+
+    },
+    "greeting" : {
+      "comment" : "Greeting text",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welcome!"
+          }
+        }
+      }
+    },
+    "Home" : {
+
+    },
+    "Profile" : {
+
+    },
+    "Search" : {
+
+    }
+  },
+  "version" : "1.0"
+}
