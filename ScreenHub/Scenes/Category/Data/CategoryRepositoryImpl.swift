@@ -11,54 +11,38 @@ class CategoryRepositoryImpl: CategoryRepository {
     
     @Injected(\.categoryServiceProvider) private var service: CategoryService
     
-    func getCategories(type: CategoryType) -> AnyPublisher<[Category], NetworkError> {
-        let endpoints: [Endpoint] = [
-            .trendingMovies, .popularMovies, .playingNowMovies, .topRatedMovies, .upcomingMovies,
+    func getCategories(mediaType: MediaType) -> AnyPublisher<[Category], NetworkError> {
+        let endpoints: [Endpoint] = mediaType == .movie ? [
+            .trendingMovies, .popularMovies, .playingNowMovies, .topRatedMovies, .upcomingMovies
+        ] : [
             .trendingTvs, .popularTvs, .airingTodayTvs, .topRatedTvs, .onTheAirTvs
         ]
         
-        let publishers: [AnyPublisher<[CategoryItem], NetworkError>] = endpoints.map { endpoint in
-            service.getMedias(endpoint: endpoint)
-                .map { response in self.map(response) }
+        let publishers: [AnyPublisher<[Media], NetworkError>] = endpoints.map { endpoint in
+            service.getMedias(endpoint: endpoint, mediaType: mediaType)
+                .map { response in CategoryMapper.map(response: response) }
                 .eraseToAnyPublisher()
         }
         
-        let categories = Publishers.Zip(publishers[0], publishers[1]).flatMap { trending, popular in
-            
+        return Publishers.Zip(publishers[0], publishers[1]).flatMap { trending, popular in
             Publishers.Zip(publishers[2], publishers[3]).flatMap { playingNow, topRated in
-                
-                Publishers.Zip(publishers[4], publishers[5]).flatMap { upcoming, newRelease in
-                    
-                    Publishers.Zip(publishers[6], publishers[7]).flatMap { highlyRated, documentaries in
-                        
-                        Publishers.Zip(publishers[8], publishers[9]).map { classics, tvOnAir in
-                            return [
-                                // Movies
-                                Category(name: "Movie Trending", items: trending, type: .movie),
-                                Category(name: "Movie Popular", items: popular, type: .movie),
-                                Category(name: "Movie Playing Now", items: playingNow, type: .movie),
-                                Category(name: "Movie Top Rated", items: topRated, type: .movie),
-                                Category(name: "Movie Upcoming", items: upcoming, type: .movie),
-                                // TV Shows
-                                Category(name: "Tv Trending", items: trending, type: .tv),
-                                Category(name: "Tv Popular", items: popular, type: .tv),
-                                Category(name: "Tv Airing Today", items: playingNow, type: .tv),
-                                Category(name: "Tv Top Rated", items: topRated, type: .tv),
-                                Category(name: "Tv On Air", items: tvOnAir, type: .tv)
-                            ]
-                        }
-                    }
+                publishers[4].map { upcoming in
+                    return mediaType == .movie ? [
+                        Category(name: "Movie Trending", items: trending.shuffled(), type: .banner),
+                        Category(name: "Movie Popular", items: popular.shuffled(), type: .carrousel),
+                        Category(name: "Movie Playing Now", items: playingNow.shuffled(), type: .carrousel),
+                        Category(name: "Movie Top Rated", items: topRated.shuffled(), type: .carrousel),
+                        Category(name: "Movie Upcoming", items: upcoming.shuffled(), type: .carrousel)
+                    ] : [
+                        Category(name: "TV Trending", items: trending.shuffled(), type: .banner),
+                        Category(name: "TV Popular", items: popular.shuffled(), type: .carrousel),
+                        Category(name: "TV Airing Today", items: playingNow.shuffled(), type: .carrousel),
+                        Category(name: "TV Top Rated", items: topRated.shuffled(), type: .carrousel),
+                        Category(name: "Tv On Air", items: upcoming.shuffled(), type: .carrousel)
+                    ]
                 }
             }
-        }
-        
-        return categories.eraseToAnyPublisher()
-    }
-    
-    private func map(_ response: MediaResult) -> [CategoryItem] {
-        response.results.map { media in
-            CategoryItem(name: media.name, imagePath: media.poster)
-        }
+        }.eraseToAnyPublisher()
     }
     
 }

@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		B9BD4E0F2D38153500EAF786 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = B9BD4E0E2D38153500EAF786 /* SDWebImageSwiftUI */; };
+		B9F701082D3808FC0086CA9B /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = B9F701072D3808FC0086CA9B /* Lottie */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		B94637FA2D34AF6B00C17791 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +57,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B9BD4E0F2D38153500EAF786 /* SDWebImageSwiftUI in Frameworks */,
+				B9F701082D3808FC0086CA9B /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +119,8 @@
 			);
 			name = ScreenHub;
 			packageProductDependencies = (
+				B9F701072D3808FC0086CA9B /* Lottie */,
+				B9BD4E0E2D38153500EAF786 /* SDWebImageSwiftUI */,
 			);
 			productName = ScreenHub;
 			productReference = B94637E72D34AF6900C17791 /* ScreenHub.app */;
@@ -197,6 +206,8 @@
 			mainGroup = B94637DE2D34AF6900C17791;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				B9F701062D3808FC0086CA9B /* XCRemoteSwiftPackageReference "lottie-spm" */,
+				B9BD4E0D2D38153500EAF786 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B94637E82D34AF6900C17791 /* Products */;
@@ -565,6 +576,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B9BD4E0D2D38153500EAF786 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.3;
+			};
+		};
+		B9F701062D3808FC0086CA9B /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-spm";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.5.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B9BD4E0E2D38153500EAF786 /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B9BD4E0D2D38153500EAF786 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
+		};
+		B9F701072D3808FC0086CA9B /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B9F701062D3808FC0086CA9B /* XCRemoteSwiftPackageReference "lottie-spm" */;
+			productName = Lottie;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B94637DF2D34AF6900C17791 /* Project object */;
 }

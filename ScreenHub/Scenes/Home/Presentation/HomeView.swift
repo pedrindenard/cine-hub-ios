@@ -33,18 +33,20 @@ struct HomeView: View {
     
     var body: some View {
         TabView {
-            Tab("Home", systemImage: "house") {
+            Tab("Movie", systemImage: "film") {
                 viewModel
                     .makeCategoryRouter()
-                    .makeView()
+                    .makeView(mediaType: .movie)
             }
             
-            Tab("Discovery", systemImage: "network") {
+            Tab("Tv", systemImage: "tv") {
+                viewModel
+                    .makeCategoryRouter()
+                    .makeView(mediaType: .tv)
+            }
+            
+            Tab("Discovery", systemImage: "safari") {
                 Text("Discovery")
-            }
-            
-            Tab("Search", systemImage: "magnifyingglass") {
-                Text("Search")
             }
             
             Tab("Profile", systemImage: "person") {

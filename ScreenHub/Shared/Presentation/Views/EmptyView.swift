@@ -28,28 +28,29 @@ struct EmptyView: View {
     var body: some View {
         VStack(alignment: .center, spacing: 16) {
             Image(systemName: "exclamationmark.triangle")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 36 * weight, height: 36 * height)
-                
-                Text(title)
-                    .font(.system(.body).bold())
-                    .foregroundStyle(.primary)
-                    .multilineTextAlignment(.center)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .padding(.horizontal, 40)
-                    .padding(.top, 8)
-                
-                Text(description)
-                    .font(.system(.subheadline))
-                    .foregroundStyle(.primary)
-                    .multilineTextAlignment(.center)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .padding(.horizontal, 48)
-                    .padding(.bottom, 16)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 36 * weight, height: 36 * height)
+            
+            Text(title)
+                .font(.system(.body).bold())
+                .foregroundStyle(.primary)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .padding(.horizontal, 40)
+                .padding(.top, 8)
+            
+            Text(description)
+                .font(.system(.subheadline))
+                .foregroundStyle(.primary)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .padding(.horizontal, 48)
+                .padding(.bottom, 16)
             
             view()
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
 }

@@ -15,79 +15,61 @@ struct CategoryView: View {
     @ScaledMetric var width: CGFloat = 105
     
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            Group {
-                if case ViewState.success(let categories) = viewModel.state {
-                    Sections(categories: categories)
-                }
-                
-                if case ViewState.error(_) = viewModel.state {
-                    EmptyView(
-                        title: "No Data Available",
-                        description: "We couldn't find any data to display.\nPlease try again later."
-                    ) {
-                        Button("Retry") {
-                            viewModel.startLoading()
-                            viewModel.startFetching()
-                        }.buttonStyle(.bordered)
-                    }
-                }
-                
-                if case ViewState.loading = viewModel.state {
-                    ProgressView()
-                }
+        Group {
+            if case ViewState.success(let categories) = viewModel.state {
+                SectionView(categories: categories)
+                    .contentMargins(.bottom, 16)
+                    .contentMargins(.top, 16)
             }
-            .animation(.easeInOut, value: viewModel.state)
-        }
-    }
-    
-    private func Sections(categories: [Category]) -> some View {
-        LazyVStack(alignment: .leading) {
-            ForEach(categories, id: \.name) { category in
-                Section {
-                    SectionContent(category: category)
-                } header: {
-                    SectionHeader(category: category)
-                }
-            }
-        }
-    }
-    
-    private func SectionFooter(item: CategoryItem) -> some View {
-        VStack(alignment: .leading) {
-            AsyncImageView(path: item.imagePath)
-                .frame(width: width, height: height)
             
-            Text(item.name)
-                .font(.caption)
-                .lineLimit(2, reservesSpace: true)
-                .padding(.horizontal, 2)
-                .bold()
-        }
-        .frame(width: width)
-    }
-    
-    private func SectionContent(category: Category) -> some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            LazyHStack(spacing: 8) {
-                ForEach(category.items, id: \.name) { item in
-                    SectionFooter(item: item)
-                }
+            if case ViewState.error(let message) = viewModel.state {
+                FailureView(message: message)
+            }
+            
+            if case ViewState.loading = viewModel.state {
+                LoadingView()
             }
         }
-        .contentMargins(.horizontal, 16)
-        .contentMargins(.bottom, 8)
+        .transition(.opacity)
     }
     
-    private func SectionHeader(category: Category) -> some View {
-        Text(category.name)
-            .font(.title2)
-            .padding(.horizontal)
-            .bold()
+    private func SectionView(categories: [Category]) -> some View {
+        ScrollView(.vertical, showsIndicators: true) {
+            LazyVStack(alignment: .leading) {
+                SectionStackView(categories: categories)
+            }
+        }
+    }
+    
+    private func SectionStackView(categories: [Category]) -> some View {
+        ForEach(categories) { category in
+            if category.type == .carrousel {
+                CategoryCarrouselView(category: category)
+            } else {
+                CategoryBannerView(category: category)
+            }
+        }
+    }
+    
+    private func FailureView(message: String) -> some View {
+        EmptyView(
+            title: "No Data Available",
+            description: "We couldn't find any data to display.\n\(message)."
+        ) {
+            ButtonView(title: "Retry")
+                .buttonStyle(.bordered)
+        }
+    }
+    
+    private func ButtonView(title: String) -> some View {
+        Button(title) {
+            viewModel.startLoading()
+            viewModel.startFetching()
+        }
     }
     
 }
 
 #Preview {
-    CategoryView(viewModel: .init())
+    CategoryView(viewModel: .init(mediaType: .tv))
 }

@@ -14,12 +14,21 @@ class CategoryViewModel : ObservableObject {
     @Injected(\.categoryRouterProvider) private var categoryRouter: CategoryViewRouter
     
     @Published var state: ViewState<[Category]> = ViewState.loading
+    @Published var mediaType: MediaType = MediaType.movie
     
     private var publishers: [AnyCancellable] = []
     
-    init() {
+    init(mediaType: MediaType) {
+        self.mediaType = mediaType
+        
         startLoading()
         startFetching()
+    }
+    
+    private func updateState(_ newState: ViewState<[Category]>) {
+        withAnimation(.easeIn) {
+            self.state = newState
+        }
     }
     
     deinit {
@@ -32,11 +41,11 @@ class CategoryViewModel : ObservableObject {
 extension CategoryViewModel {
     
     func startLoading() {
-        self.state = ViewState.loading
+        updateState(ViewState.loading)
     }
     
     func startFetching() {
-        self.repository.getCategories(type: .movie)
+        self.repository.getCategories(mediaType: mediaType)
             .receive(on: DispatchQueue.main)
             .sink(
                 receiveCompletion: { [weak self] completion in self?.receiveCompletion(completion) },
@@ -52,15 +61,15 @@ extension CategoryViewModel {
     
     private func receiveCompletion(_ completion: Subscribers.Completion<NetworkError>) {
         if case .failure(let error) = completion {
-            self.state = ViewState.error(message: error.localizedDescription)
+            updateState(ViewState.error(message: error.localizedDescription))
         }
     }
     
     private func receiveValue(_ categories: [Category]) {
         if categories.isEmpty {
-            self.state = ViewState.error(message: "TMDB server is offline")
+            updateState(ViewState.error(message: "TMDB server is offline"))
         } else {
-            self.state = ViewState.success(result: categories)
+            updateState(ViewState.success(result: categories))
         }
     }
     

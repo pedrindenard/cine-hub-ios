@@ -28,8 +28,14 @@ class CategoryViewRouter {
 // MARK: - ViewFactory implementation
 extension CategoryViewRouter: Routable {
     
+    func makeView(mediaType: MediaType) -> AnyView {
+        let viewModel = CategoryViewModel(mediaType: mediaType)
+        let view = CategoryView(viewModel: viewModel)
+        return AnyView(view)
+    }
+    
     func makeView() -> AnyView {
-        let viewModel = CategoryViewModel()
+        let viewModel = CategoryViewModel(mediaType: MediaType.movie)
         let view = CategoryView(viewModel: viewModel)
         return AnyView(view)
     }

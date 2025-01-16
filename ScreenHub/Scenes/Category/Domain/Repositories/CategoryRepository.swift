@@ -9,6 +9,6 @@ import Combine
 
 protocol CategoryRepository {
     
-    func getCategories(type: CategoryType) -> AnyPublisher<[Category], NetworkError>
+    func getCategories(mediaType: MediaType) -> AnyPublisher<[Category], NetworkError>
     
 }

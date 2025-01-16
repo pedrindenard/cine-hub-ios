@@ -9,6 +9,6 @@ import Combine
 
 protocol CategoryService {
     
-    func getMedias(endpoint: Endpoint) -> AnyPublisher<MediaResult, NetworkError>
+    func getMedias(endpoint: Endpoint, mediaType: MediaType) -> AnyPublisher<MediaResult, NetworkError>
     
 }

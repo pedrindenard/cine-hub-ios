@@ -5,7 +5,9 @@
 //  Created by Pedro Denardi Minuzzi on 14/01/25.
 //
 
-struct MediaResult {
+import Foundation
+
+struct MediaResult: Equatable {
     
     let totalResults: Int
     let totalPages: Int
@@ -14,20 +16,30 @@ struct MediaResult {
     
 }
 
-struct Media {
+struct Media: Equatable, Identifiable {
     
-    let id: Int
+    let id: UUID = UUID()
+    
+    let key: Int
     let popularity: Double
     let type: String
-
+    
     let voteCount: Double
     let voteAverage: Double
-
+    
     let backdrop: String
     let poster: String
-
+    
     let overview: String
     let releaseDate: String
     let name: String
+    
+}
+
+enum MediaType: String, Equatable {
+    
+    case person = "person"
+    case movie = "movie"
+    case tv = "tv"
     
 }

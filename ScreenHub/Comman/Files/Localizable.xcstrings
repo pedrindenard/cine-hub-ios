@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%lf" : {
+
+    },
     "Discovery" : {
 
     },
@@ -19,10 +22,13 @@
     "Home" : {
 
     },
+    "Movie" : {
+
+    },
     "Profile" : {
 
     },
-    "Search" : {
+    "Tv" : {
 
     }
   },
