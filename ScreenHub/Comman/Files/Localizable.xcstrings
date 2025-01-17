@@ -103,9 +103,6 @@
         }
       }
     },
-    "Failed to load more" : {
-
-    },
     "gender_female" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -140,14 +137,192 @@
         }
       }
     },
-    "Loading..." : {
-
+    "search_idle_description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Find your favorite movies, series, and artists"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Encontre seus filmes, séries e artistas favoritos"
+          }
+        }
+      }
     },
-    "Retry" : {
-
+    "search_idle_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pesquisar"
+          }
+        }
+      }
     },
-    "Something went wrong while loading more content" : {
-
+    "search_movie" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Movies"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filmes"
+          }
+        }
+      }
+    },
+    "search_multi" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tudo"
+          }
+        }
+      }
+    },
+    "search_no_results_description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check if the title is correct and try again"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verifique se o título está correto e tente novamente"
+          }
+        }
+      }
+    },
+    "search_no_results_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No results found"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nenhum resultado encontrado"
+          }
+        }
+      }
+    },
+    "search_pager_error_description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "An unexpected error occurred"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Algum erro inesperado ocorreu, tente novamente mais tarde"
+          }
+        }
+      }
+    },
+    "search_pager_error_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to load more pages"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Falha ao carregar mais páginas"
+          }
+        }
+      }
+    },
+    "search_person" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actors"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atores"
+          }
+        }
+      }
+    },
+    "search_prompt" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Walking Dead…"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Walking Dead…"
+          }
+        }
+      }
+    },
+    "search_tv" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tvs"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tvs"
+          }
+        }
+      }
     },
     "tab_discovery" : {
       "extractionState" : "manual",
@@ -217,22 +392,19 @@
         }
       }
     },
-    "The Walking Dead..." : {
-
-    },
     "unavailable_content_description" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "We couldn't find any data to display"
+            "value" : "Please try again shortly"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Não conseguimos encontrar nenhum dado para exibir"
+            "value" : "Tente novamente em alguns momentos"
           }
         }
       }
@@ -260,13 +432,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No Data Available"
+            "value" : "Something went wrong"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nenhum dado disponível"
+            "value" : "Algo deu errado"
           }
         }
       }

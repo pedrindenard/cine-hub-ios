@@ -29,7 +29,6 @@ struct CategoryBannerView: View {
         }
         .scrollTargetBehavior(.viewAligned)
     }
-    
 }
 
 #if DEBUG

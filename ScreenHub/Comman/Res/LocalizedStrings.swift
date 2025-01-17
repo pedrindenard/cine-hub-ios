@@ -23,11 +23,24 @@ struct LocalizedString {
     static let categoryUpcoming = String(localized: "category_upcoming")
     static let categoryPlayingNow = String(localized: "category_playing_now")
     
+    static let searchPrompt = String(localized: "search_prompt")
+    static let searchNoResultsTitle = String(localized: "search_no_results_title")
+    static let searchNoResultsDescription = String(localized: "search_no_results_description")
+    static let searchIdleTitle = String(localized: "search_idle_title")
+    static let searchIdleDescription = String(localized: "search_idle_description")
+    static let searchPagerErrorTitle = String(localized: "search_pager_error_title")
+    static let searchPagerErrorDescription = String(localized: "search_pager_error_description")
+    
     static let genderFemale = String(localized: "gender_female")
     static let genderMale = String(localized: "gender_male")
     
     static let unknown = String(localized: "unknown")
     static let unknownLanguage = String(localized: "unknown_language")
     static let unknownRegion = String(localized: "unknown_region")
+    
+    static let searchPerson = String(localized: "search_person")
+    static let searchMovie = String(localized: "search_movie")
+    static let searchMulti = String(localized: "search_multi")
+    static let searchTv = String(localized: "search_tv")
     
 }

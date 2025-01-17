@@ -42,19 +42,7 @@ struct AsyncImageView: View {
                     .frameDimension(frameWidth, frameHeight)
                     .frameAspectRatio(scale: imageAspectRatio.ratio)
                     .frameShape(radius: 4)
-            }
-            
-            if case .failure(_) = phase {
-                Color
-                    .gray
-                    .opacity(0.2)
-                    .frameDimension(frameWidth, frameHeight)
-                    .frameAspectRatio(scale: imageAspectRatio.ratio)
-                    .frameShape(radius: 4)
-                    .blur(radius: 2)
-            }
-            
-            if case .empty = phase {
+            } else {
                 Color
                     .gray
                     .opacity(0.2)
@@ -93,7 +81,7 @@ extension View {
     }
     
     @ViewBuilder
-    func frameDimension(_ width: CGFloat?, _ height: CGFloat?) -> some View {
+    func frameDimension(_ width: CGFloat? = nil, _ height: CGFloat? = nil) -> some View {
         if let width = width, let height = height {
             self.frame(width: width, height: height)
         } else if let width = width {

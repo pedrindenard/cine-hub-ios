@@ -11,10 +11,11 @@ import Combine
 @MainActor
 class SearchPagination<Item: Paginable>: ObservableObject {
     
-    let fetchItems: (_ query: String, _ page: Int) async throws -> (items: [Item], pages: Int)
+    let fetcher: (_ query: String, _ page: Int, _ endpoint: Endpoint) async throws -> (items: [Item], pages: Int)
     
     @Published private(set) var state: PagerState = .idle
     @Published private(set) var items: [Item] = []
+    @Published private var endpoint: Endpoint
     
     private var publishers: Set<AnyCancellable> = Set()
     
@@ -23,9 +24,10 @@ class SearchPagination<Item: Paginable>: ObservableObject {
     
     @Published var query: String
     
-    init(fetchItems: @escaping (_ query: String, _ page: Int) async throws -> (items: [Item], pages: Int)) {
+    init(fetcher: @escaping (_ query: String, _ page: Int, _ endpoint: Endpoint) async throws -> (items: [Item], pages: Int), endpoint: Endpoint) {
         self.query = ""
-        self.fetchItems = fetchItems
+        self.fetcher = fetcher
+        self.endpoint = endpoint
     }
     
     func startObservable() {
@@ -59,11 +61,24 @@ class SearchPagination<Item: Paginable>: ObservableObject {
 // MARK: Search use case implementation
 extension SearchPagination {
     
+    func updateEndpoint(_ endpoint: Endpoint) {
+        self.endpoint = endpoint
+        
+        self.items.removeAll()
+        
+        self.state = query.isEmpty ? .idle : .loadingInitial
+        self.page = 1
+        
+        Task {
+            await self.loadInitial(query: query)
+        }
+    }
+    
     func loadInitial(query: String) async {
         guard !query.isEmpty else { return }
         
         do {
-            let (newItems, pages) = try await fetchItems(query, page)
+            let (newItems, pages) = try await fetcher(query, page, endpoint)
             self.pages = pages
             
             self.items = newItems
@@ -80,7 +95,7 @@ extension SearchPagination {
         self.page += 1
         
         do {
-            let (newItems, _) = try await fetchItems(query, page)
+            let (newItems, _) = try await fetcher(query, page, endpoint)
             
             self.items.append(contentsOf: newItems)
             self.state = newItems.isEmpty ? .endReached : .idle

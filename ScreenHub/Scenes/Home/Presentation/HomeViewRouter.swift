@@ -7,10 +7,8 @@
 
 import SwiftUI
 
-// MARK: - Class implementation
 class HomeViewRouter {
     
-    @Injected(\.searchRouterProvider) private var searchRouter: SearchViewRouter
     @Injected(\.navigationProvider) private var navigation: NavigationCoordinator
 
     private let identifier: UUID
@@ -19,16 +17,11 @@ class HomeViewRouter {
         self.identifier = UUID()
     }
     
-    func routeToSearch() {
-        self.navigation.push(searchRouter)
-    }
-    
     func pop() {
         self.navigation.popLast()
     }
 }
 
-// MARK: - ViewFactory implementation
 extension HomeViewRouter: Routable {
     
     func makeView() -> AnyView {
@@ -39,7 +32,6 @@ extension HomeViewRouter: Routable {
     
 }
 
-// MARK: - Hashable implementation
 extension HomeViewRouter {
     
     static func == (lhs: HomeViewRouter, rhs: HomeViewRouter) -> Bool {

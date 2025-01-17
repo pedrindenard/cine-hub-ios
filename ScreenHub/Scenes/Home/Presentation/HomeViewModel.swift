@@ -16,10 +16,6 @@ class HomeViewModel : ObservableObject {
         self.categoryRouter
     }
     
-    func navigateToSearch() {
-        self.homeRouter.routeToSearch()
-    }
-    
     func pop() {
         self.homeRouter.pop()
     }

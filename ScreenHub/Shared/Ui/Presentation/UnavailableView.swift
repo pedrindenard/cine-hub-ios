@@ -9,32 +9,56 @@ import SwiftUI
 
 struct UnavailableView: View {
     
-    private var title: String
-    private var description: String
+    private var title: String = LocalizedString.unavailableContentTitle
+    private var description: String = LocalizedString.unavailableContentDescription
+    private var system: String = "wifi.exclamationmark"
     
     @ScaledMetric private var weight: CGFloat = 1
     @ScaledMetric private var height: CGFloat = 1
     
     private var actions: () -> AnyView
     
-    init(title: String, description: String, @ViewBuilder actions: @escaping () -> some View) {
+    init(title: String, description: String, system: String) {
+        self.title = title
+        self.description = description
+        self.system = system
+        self.actions = {
+            AnyView(EmptyView())
+        }
+    }
+    
+    init(title: String, description: String, action: @escaping () -> Void) {
         self.title = title
         self.description = description
         self.actions = {
-            AnyView(actions())
+            AnyView(UnavailableButtonView(action: action))
+        }
+    }
+    
+    init(action: @escaping () -> Void) {
+        self.actions = {
+            AnyView(UnavailableButtonView(action: action))
+        }
+    }
+    
+    init() {
+        self.actions = {
+            AnyView(EmptyView())
         }
     }
     
     var body: some View {
         ContentUnavailableView {
-            Image(systemName: "exclamationmark.triangle")
+            Image(systemName: system)
                 .font(.largeTitle)
             
             Text(title)
+                .padding(.horizontal, 18)
                 .padding(.bottom, 8)
                 .padding(.top, 16)
         } description: {
             Text(description)
+                .padding(.horizontal, 24)
         } actions: {
             actions()
         }
@@ -44,12 +68,16 @@ struct UnavailableView: View {
 
 struct UnavailableButtonView: View {
     
-    var text: String
+    var text: String = LocalizedString.unavailableContentRetry
     var action: () -> Void
 
     init(_ text: String, action: @escaping () -> Void) {
         self.action = action
         self.text = text
+    }
+    
+    init(action: @escaping () -> Void) {
+        self.action = action
     }
     
     var body: some View {
@@ -60,11 +88,8 @@ struct UnavailableButtonView: View {
 
 #Preview {
     UnavailableView(
-        title: LocalizedString.unavailableContentTitle,
-        description: LocalizedString.unavailableContentDescription
-    ) {
-        UnavailableButtonView(LocalizedString.unavailableContentRetry) {
-            
-        }
-    }
+        title: "Algo deu errado",
+        description: "Tente novamente em alguns instantes",
+        system: "wifi.exclamationmark"
+    )
 }

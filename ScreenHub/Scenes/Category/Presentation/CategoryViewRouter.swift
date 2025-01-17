@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-// MARK: - Class implementation
 class CategoryViewRouter {
     
     @Injected(\.navigationProvider) private var navigation: NavigationCoordinator
@@ -20,7 +19,6 @@ class CategoryViewRouter {
     
 }
 
-// MARK: - ViewFactory implementation
 extension CategoryViewRouter: Routable {
     
     @MainActor
@@ -36,7 +34,6 @@ extension CategoryViewRouter: Routable {
     
 }
 
-// MARK: - Hashable implementation
 extension CategoryViewRouter {
     
     static func == (lhs: CategoryViewRouter, rhs: CategoryViewRouter) -> Bool {

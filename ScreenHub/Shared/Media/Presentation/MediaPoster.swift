@@ -29,8 +29,11 @@ struct MediaPoster: View {
     
     private func AsyncFrameView(name: String, poster: String) -> some View {
         VStack(alignment: .leading) {
-            AsyncImageView(aspectRatio: .ratio2_3, quality: .small, path: poster).frameDimension(posterWidth, posterHeight)
+            AsyncImageView(aspectRatio: .ratio2_3, quality: .small, path: poster)
+                .frameDimension(posterWidth, posterHeight)
+            
             AsyncTextView(name: name).padding(.horizontal, 2)
+                .frameDimension(posterWidth)
         }
     }
     
