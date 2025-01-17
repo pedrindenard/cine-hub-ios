@@ -11,13 +11,8 @@ struct CategoryCarrouselView: View {
     
     @ScaledMetric private var height: CGFloat = 105 * 1.5
     @ScaledMetric private var width: CGFloat = 105
-    
-    private let category: Category
-    
-    init(category: Category) {
-        self.category = category
-    }
-    
+    let category: Category
+
     var body: some View {
         Section {
             SectionContent(category: category)
@@ -32,24 +27,10 @@ struct CategoryCarrouselView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHStack(spacing: 8) {
                 ForEach(category.items) { item in
-                    SectionItem(item: item)
+                    MediaPoster(width: width, height: height, name: item.name, poster: item.poster)
                 }
             }
         }
-    }
-    
-    private func SectionItem(item: Media) -> some View {
-        VStack(alignment: .leading) {
-            AsyncImageView(aspectRatio: 2/3, path: item.poster)
-                .frame(width: width, height: height)
-            
-            Text(item.name)
-                .font(.caption)
-                .lineLimit(2, reservesSpace: true)
-                .padding(.horizontal, 2)
-                .bold()
-        }
-        .frame(width: width)
     }
     
     private func SectionHeader(category: Category) -> some View {

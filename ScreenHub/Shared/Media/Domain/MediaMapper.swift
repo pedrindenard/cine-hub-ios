@@ -12,7 +12,7 @@ struct MediaMapper {
         let poster = response.poster ?? response.profile ?? ""
         let name = response.name ?? response.title ?? ""
         
-        let type = response.type ?? mediaType.rawValue
+        let type = map(mediaType: response.type ?? mediaType.rawValue)
         
         return Media(
             key: response.key,
@@ -38,6 +38,16 @@ struct MediaMapper {
             page: response.page
         )
     }
+    
+    static func map(mediaType: String) -> MediaType {
+        if mediaType == "person" {
+            MediaType.person
+        } else if mediaType == "movie" {
+            MediaType.movie
+        } else {
+            MediaType.tv
+        }
+    }
 }
 
 #if DEBUG
@@ -46,7 +56,7 @@ extension Media {
         Media(
             key: 157336,
             popularity: 373.26,
-            type: "movie",
+            type: .movie,
             voteCount: 36120,
             voteAverage: 8.4,
             backdrop: "/9REO1DLpmwhrBJY3mYW5eVxkXFM.jpg",

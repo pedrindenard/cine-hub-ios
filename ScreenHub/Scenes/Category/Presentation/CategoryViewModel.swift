@@ -8,21 +8,34 @@
 import Combine
 import SwiftUI
 
+@MainActor
 class CategoryViewModel : ObservableObject {
     
     @Injected(\.categoryRepositoryProvider) private var repository: CategoryRepository
-    @Injected(\.categoryRouterProvider) private var categoryRouter: CategoryViewRouter
-    
-    @Published var state: ViewState<[Category]> = ViewState.loading
+    @Injected(\.categoryRouterProvider) private var router: CategoryViewRouter
+        
     @Published var mediaType: MediaType = MediaType.movie
-    
-    private var publishers: [AnyCancellable] = []
-    
+    @Published var state: ViewState<[Category]> = ViewState.loading
+
     init(mediaType: MediaType) {
         self.mediaType = mediaType
+        self.getCategories()
+    }
+    
+    private func updateCategories() async {
+        self.updateState(ViewState.loading)
         
-        startLoading()
-        startFetching()
+        do {
+            let categories = try await repository.getCategories(mediaType: mediaType)
+            
+            if categories.isEmpty {
+                self.updateState(.error(message: "TMDB server is offline"))
+            } else {
+                self.updateState(.success(result: categories))
+            }
+        } catch {
+            self.updateState(.error(message: error.localizedDescription))
+        }
     }
     
     private func updateState(_ newState: ViewState<[Category]>) {
@@ -31,53 +44,10 @@ class CategoryViewModel : ObservableObject {
         }
     }
     
-    deinit {
-        publishers.forEach { publish in publish.cancel() }
-    }
-    
-}
-
-// MARK: Use case implementatino
-extension CategoryViewModel {
-    
-    func startLoading() {
-        updateState(ViewState.loading)
-    }
-    
-    func startFetching() {
-        self.repository.getCategories(mediaType: mediaType)
-            .receive(on: DispatchQueue.main)
-            .sink(
-                receiveCompletion: { [weak self] completion in self?.receiveCompletion(completion) },
-                receiveValue: { [weak self] categories in self?.receiveValue(categories) }
-            )
-            .store(in: &publishers)
-    }
-    
-}
-
-// MARK: Network callback implementation
-extension CategoryViewModel {
-    
-    private func receiveCompletion(_ completion: Subscribers.Completion<NetworkError>) {
-        if case .failure(let error) = completion {
-            updateState(ViewState.error(message: error.localizedDescription))
+    func getCategories() {
+        Task {
+            await self.updateCategories()
         }
     }
     
-    private func receiveValue(_ categories: [Category]) {
-        if categories.isEmpty {
-            updateState(ViewState.error(message: "TMDB server is offline"))
-        } else {
-            updateState(ViewState.success(result: categories))
-        }
-    }
-    
-}
-
-// MARK: Navigation implementation
-extension CategoryViewModel {
-    func navigateToSearch() {
-        self.categoryRouter.routeToSearch()
-    }
 }

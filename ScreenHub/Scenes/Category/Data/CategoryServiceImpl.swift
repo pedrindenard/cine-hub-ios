@@ -5,14 +5,12 @@
 //  Created by Pedro Denardi Minuzzi on 14/01/25.
 //
 
-import Combine
-
 class CategoryServiceImpl: CategoryService {
 
-    func getMedias(endpoint: Endpoint, mediaType: MediaType) -> AnyPublisher<MediaResult, NetworkError> {
-        NetworkRequest.queue(method: .GET, endpoint: endpoint)
-            .map { (response: MediaResultResponse) in MediaMapper.map(response: response, mediaType: mediaType) }
-            .eraseToAnyPublisher()
+    func getMedias(endpoint: Endpoint, mediaType: MediaType) async throws -> Result<MediaResult, NetworkError> {
+        try await NetworkRequest.queue(method: .GET, endpoint: endpoint).map { response in
+            MediaMapper.map(response: response, mediaType: mediaType)
+        }
     }
     
 }

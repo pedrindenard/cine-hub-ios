@@ -33,24 +33,28 @@ struct HomeView: View {
     
     var body: some View {
         TabView {
-            Tab("Movie", systemImage: "film") {
+            Tab(LocalizedString.tabMovie, systemImage: "film") {
                 viewModel
                     .makeCategoryRouter()
                     .makeView(mediaType: .movie)
             }
             
-            Tab("Tv", systemImage: "tv") {
+            Tab(LocalizedString.tabTv, systemImage: "tv") {
                 viewModel
                     .makeCategoryRouter()
                     .makeView(mediaType: .tv)
             }
             
-            Tab("Discovery", systemImage: "safari") {
-                Text("Discovery")
+            Tab(LocalizedString.tabDiscovery, systemImage: "safari") {
+                viewModel
+                    .makeCategoryRouter()
+                    .makeView(mediaType: .tv)
             }
             
-            Tab("Profile", systemImage: "person") {
-                Text("Profile")
+            Tab(LocalizedString.tabProfile, systemImage: "person") {
+                viewModel
+                    .makeCategoryRouter()
+                    .makeView(mediaType: .tv)
             }
         }
         .toolbarBackgroundColor()

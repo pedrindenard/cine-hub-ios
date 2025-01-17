@@ -18,7 +18,8 @@ struct Category: Equatable, Identifiable {
 }
 
 enum CategoryType: Equatable {
-            
+    
+    case search
     case carrousel
     case banner
     

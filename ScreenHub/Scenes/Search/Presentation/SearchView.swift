@@ -12,7 +12,7 @@ struct SearchView: View {
     @StateObject var viewModel: SearchViewModel
     
     var body: some View {
-        Text("Home").onTapGesture {
+        VStack {}.onTapGesture {
             viewModel.pop()
         }
     }

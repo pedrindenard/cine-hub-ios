@@ -16,13 +16,13 @@ struct MediaResult: Equatable {
     
 }
 
-struct Media: Equatable, Identifiable {
+struct Media: Paginable {
     
     let id: UUID = UUID()
     
     let key: Int
     let popularity: Double
-    let type: String
+    let type: MediaType
     
     let voteCount: Double
     let voteAverage: Double
@@ -36,10 +36,14 @@ struct Media: Equatable, Identifiable {
     
 }
 
-enum MediaType: String, Equatable {
+enum MediaType: String, Paginable {
     
     case person = "person"
     case movie = "movie"
     case tv = "tv"
+    
+    var id: Self {
+        self
+    }
     
 }

@@ -9,10 +9,13 @@ import SwiftUI
 
 struct CategoryView: View {
     
+    @StateObject private var pagination: SearchPagination = SearchPagination.search(endpoint: .searchMulti)
     @StateObject var viewModel: CategoryViewModel
     
-    @ScaledMetric var height: CGFloat = 105 * 1.5
-    @ScaledMetric var width: CGFloat = 105
+    @ScaledMetric private var height: CGFloat = 105 * 1.5
+    @ScaledMetric private var width: CGFloat = 105
+    
+    @State private var isPresented: Bool = false
     
     var body: some View {
         Group {
@@ -34,11 +37,89 @@ struct CategoryView: View {
     }
     
     private func SectionView(categories: [Category]) -> some View {
-        ScrollView(.vertical, showsIndicators: true) {
-            LazyVStack(alignment: .leading) {
-                SectionStackView(categories: categories)
+        NavigationStack {
+            if isPresented || !pagination.query.isEmpty || !pagination.items.isEmpty || pagination.state != .idle {
+                if pagination.query.isEmpty && pagination.items.isEmpty {
+                    UnavailableView(
+                        title: "Pesquisa CineHub",
+                        description: "Por favor, insira um título para a sua pesquisa..."
+                    ) {
+                        
+                    }
+                } else if !pagination.query.isEmpty && pagination.items.isEmpty && pagination.state == .loadingInitial {
+                    ProgressView()
+                } else if !pagination.query.isEmpty && pagination.items.isEmpty && pagination.state == .endReached {
+                    UnavailableView(
+                        title: "Nenhum resultado encontrado",
+                        description: "Verifique se o título está correto e tente novamente..."
+                    ) {
+                        
+                    }
+                } else if !pagination.query.isEmpty && pagination.items.isEmpty && pagination.state == .endErr {
+                    UnavailableView(
+                        title: LocalizedString.unavailableContentTitle,
+                        description: LocalizedString.unavailableContentDescription
+                    ) {
+                        UnavailableButtonView(LocalizedString.unavailableContentRetry) {
+                            Task {
+                                await pagination.loadInitial(query: pagination.query)
+                            }
+                        }
+                    }
+                } else {
+                    ScrollView(.vertical, showsIndicators: true) {
+                        let columns = [
+                            GridItem(.flexible()),
+                            GridItem(.flexible()),
+                            GridItem(.flexible())
+                        ]
+                        
+                        LazyVGrid(columns: columns, spacing: 8) {
+                            ForEach(pagination.items) { item in
+                                MediaPoster(name: item.name, poster: item.poster).onAppear {
+                                    if pagination.items[pagination.items.count/4].id == item.id || pagination.items.last?.id == item.id {
+                                        Task {
+                                            await pagination.loadMore()
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            if pagination.state == .loadingMore {
+                                ProgressView("Loading...")
+                                    .gridCellAnchor(.center)
+                                    .gridCellColumns(3)
+                            } else if pagination.state == .endErr {
+                                ContentUnavailableView {
+                                    Text("Failed to load more")
+                                } description: {
+                                    Text("Something went wrong while loading more content")
+                                } actions: {
+                                    Button("Retry") {
+                                        Task {
+                                            await pagination.loadMore()
+                                        }
+                                    }.buttonStyle(.borderless)
+                                }
+                                .gridCellAnchor(.center)
+                                .gridCellColumns(3)
+                            }
+                        }
+                    }
+                    .contentMargins(.horizontal, 8)
+                    .onAppear {
+                        self.pagination.startObservable()
+                    }
+                }
+            } else {
+                ScrollView(.vertical, showsIndicators: true) {
+                    LazyVStack(alignment: .leading) {
+                        SectionStackView(categories: categories)
+                    }
+                }
             }
         }
+        .searchable(text: $pagination.query, isPresented: $isPresented, placement: .automatic, prompt: "The Walking Dead...")
     }
     
     private func SectionStackView(categories: [Category]) -> some View {
@@ -52,19 +133,13 @@ struct CategoryView: View {
     }
     
     private func FailureView(message: String) -> some View {
-        EmptyView(
-            title: "No Data Available",
-            description: "We couldn't find any data to display.\n\(message)."
+        UnavailableView(
+            title: LocalizedString.unavailableContentTitle,
+            description: LocalizedString.unavailableContentDescription
         ) {
-            ButtonView(title: "Retry")
-                .buttonStyle(.bordered)
-        }
-    }
-    
-    private func ButtonView(title: String) -> some View {
-        Button(title) {
-            viewModel.startLoading()
-            viewModel.startFetching()
+            UnavailableButtonView(LocalizedString.unavailableContentRetry) {
+                viewModel.getCategories()
+            }
         }
     }
     

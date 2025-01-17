@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LocalizedColors {
+struct LocalizedColor {
     
     static let primary = Color.primary
     static let secondary = Color.secondary

@@ -23,5 +23,12 @@ enum Endpoint: String {
     case popularMovies = "movie/popular"
     case popularTvs = "tv/popular"
     
-    // MARK: 
+    // MARK: Search endpoints
+    case searchPerson = "search/person"
+
+    case searchMovie = "search/movie"
+    case searchTv = "search/tv"
+    
+    case searchMulti = "search/multi"
+
 }

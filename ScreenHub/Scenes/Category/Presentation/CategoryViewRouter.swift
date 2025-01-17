@@ -10,7 +10,6 @@ import SwiftUI
 // MARK: - Class implementation
 class CategoryViewRouter {
     
-    @Injected(\.searchRouterProvider) private var searchRouter: SearchViewRouter
     @Injected(\.navigationProvider) private var navigation: NavigationCoordinator
 
     private let identifier: UUID
@@ -19,15 +18,12 @@ class CategoryViewRouter {
         self.identifier = UUID()
     }
     
-    func routeToSearch() {
-        self.navigation.push(searchRouter)
-    }
-    
 }
 
 // MARK: - ViewFactory implementation
 extension CategoryViewRouter: Routable {
     
+    @MainActor
     func makeView(mediaType: MediaType) -> AnyView {
         let viewModel = CategoryViewModel(mediaType: mediaType)
         let view = CategoryView(viewModel: viewModel)
@@ -35,9 +31,7 @@ extension CategoryViewRouter: Routable {
     }
     
     func makeView() -> AnyView {
-        let viewModel = CategoryViewModel(mediaType: MediaType.movie)
-        let view = CategoryView(viewModel: viewModel)
-        return AnyView(view)
+        return AnyView(Group {})
     }
     
 }
