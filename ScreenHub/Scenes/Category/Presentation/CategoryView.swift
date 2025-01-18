@@ -12,9 +12,6 @@ struct CategoryView: View {
     @StateObject private var pager: SearchPagination = .search()
     @StateObject var viewModel: CategoryViewModel
     
-    @ScaledMetric private var height: CGFloat = 105 * 1.5
-    @ScaledMetric private var width: CGFloat = 105
-    
     @State private var isPresented: Bool = false
     @State private var scope: SearchScope = .multi
         

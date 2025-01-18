@@ -6,7 +6,5 @@
 //
 
 protocol CategoryRepository {
-    
     func getCategories(mediaType: MediaType) async throws -> [Category]
-    
 }

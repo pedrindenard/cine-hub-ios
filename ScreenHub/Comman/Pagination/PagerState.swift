@@ -8,7 +8,6 @@
 import SwiftUI
 
 enum PagerState {
-    
     case idle
     
     case loadingInitial
@@ -16,5 +15,4 @@ enum PagerState {
     
     case endReached
     case endErr
-    
 }

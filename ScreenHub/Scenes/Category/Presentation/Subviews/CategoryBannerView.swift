@@ -13,13 +13,13 @@ struct CategoryBannerView: View {
     
     var body: some View {
         BannerContent(category: category)
-            .contentMargins(.horizontal, 16)
+            .contentMargins(.horizontal, 20)
             .contentMargins(.bottom, 8)
     }
     
     private func BannerContent(category: Category) -> some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            LazyHStack(spacing: 16) {
+            LazyHStack(spacing: 20) {
                 ForEach(category.items) { item in
                     MediaBanner(name: item.name, backdrop: item.backdrop, rating: item.voteAverage)
                 }

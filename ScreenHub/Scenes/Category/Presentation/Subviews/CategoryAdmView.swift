@@ -23,7 +23,7 @@ struct CategoryAdmView: View {
             SearchErrorView()
         } else {
             SearchPagerView()
-                .contentMargins(.horizontal, 8)
+                .contentMargins(.horizontal, 16)
                 .onAppear {
                     self.pager.startObservable()
                 }
@@ -73,7 +73,7 @@ struct CategoryAdmView: View {
 extension CategoryAdmView {
     
     private func SearchMediaView(_ items: [Media]) -> some View {
-        LazyVGrid(columns: columns, spacing: 8) {
+        LazyVGrid(columns: columns, spacing: 20) {
             ForEach(items) { item in
                 MediaPoster(name: item.name, poster: item.poster).onAppear {
                     loadMore(for: item)

@@ -8,7 +8,5 @@
 import Combine
 
 protocol CategoryService {
-    
     func getMedias(endpoint: Endpoint, mediaType: MediaType) async throws -> Result<MediaResult, NetworkError>
-    
 }

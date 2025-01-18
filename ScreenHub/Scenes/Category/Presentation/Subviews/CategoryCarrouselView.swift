@@ -9,14 +9,15 @@ import SwiftUI
 
 struct CategoryCarrouselView: View {
     
-    @ScaledMetric private var height: CGFloat = 105 * 1.5
-    @ScaledMetric private var width: CGFloat = 105
+    @ScaledMetric private var height: CGFloat = 120 * 1.5
+    @ScaledMetric private var width: CGFloat = 120
+    
     let category: Category
 
     var body: some View {
         Section {
             SectionContent(category: category)
-                .contentMargins(.horizontal, 16)
+                .contentMargins(.horizontal, 20)
                 .contentMargins(.bottom, 8)
         } header: {
             SectionHeader(category: category)

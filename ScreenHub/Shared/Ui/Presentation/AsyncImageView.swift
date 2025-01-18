@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SDWebImageSwiftUI
 
 struct AsyncImageView: View {
         
@@ -34,24 +33,17 @@ struct AsyncImageView: View {
     var body: some View {
         AsyncImage(
             url: URL(string: buildURLString(imageQuality, imagePath)),
-            transaction: Transaction(animation: .easeInOut)
+            transaction: Transaction(animation: Animation.easeInOut(duration: 0.2))
         ) { phase in
             if case .success(let image) = phase {
-                image
-                    .resizable()
-                    .frameDimension(frameWidth, frameHeight)
-                    .frameAspectRatio(scale: imageAspectRatio.ratio)
-                    .frameShape(radius: 4)
+                image.resizable()
             } else {
-                Color
-                    .gray
-                    .opacity(0.2)
-                    .frameDimension(frameWidth, frameHeight)
-                    .frameAspectRatio(scale: imageAspectRatio.ratio)
-                    .frameShape(radius: 4)
-                    .blur(radius: 2)
+                Color.gray.opacity(0.2).blur(radius: 2)
             }
         }
+        .frame(width: frameWidth, height: frameHeight)
+        .frameAspectRatio(scale: imageAspectRatio.ratio)
+        .frameShape(radius: 4)
     }
 }
 
@@ -78,19 +70,6 @@ extension View {
         self.clipShape(
             RoundedRectangle.rect(cornerRadius: radius)
         )
-    }
-    
-    @ViewBuilder
-    func frameDimension(_ width: CGFloat? = nil, _ height: CGFloat? = nil) -> some View {
-        if let width = width, let height = height {
-            self.frame(width: width, height: height)
-        } else if let width = width {
-            self.frame(width: width)
-        } else if let height = height {
-            self.frame(height: height)
-        } else {
-            self
-        }
     }
     
 }
