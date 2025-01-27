@@ -5,6 +5,8 @@
 //  Created by Pedro Denardi Minuzzi on 16/01/25.
 //
 
+import Foundation
+
 enum ImageAspectRatio: CustomStringConvertible {
     
     case custom(width: Int, height: Int)
@@ -39,9 +41,9 @@ enum ImageAspectRatio: CustomStringConvertible {
         }
     }
     
-    var ratio: Double {
+    var ratio: CGFloat {
         let (width, height) = dimensions
-        return Double(width) / Double(height)
+        return CGFloat(width) / CGFloat(height)
     }
     
     var description: String {

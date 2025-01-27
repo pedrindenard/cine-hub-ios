@@ -53,5 +53,18 @@ struct LocalizedString {
     static let buttonRetry = String(localized: "button_retry")
     static let buttonNext = String(localized: "button_next")
     static let buttonFinish = String(localized: "button_finish")
+    static let buttonMore = String(localized: "button_more")
+    
+    static let discoveryTitle = String(localized: "discovery_title")
+    static let discoveryMovies = String(localized: "discovery_movies")
+    static let discoveryTv = String(localized: "discovery_tv")
+    static let discoveryMovieGenres = String(localized: "discovery_movie_genres")
+    static let discoveryTvGenres = String(localized: "discovery_tv_genres")
+    static let discoveryPeoples = String(localized: "discovery_peoples")
+    static let discoveryFilter = String(localized: "discovery_filter")
+    static let discoveryProductionCompanies = String(localized: "discovery_production_companies")
+    static let discoveryTvNetworks = String(localized: "discovery_tv_networks")
+    static let discoveryCollections = String(localized: "discovery_collections")
+    static let discoveryKeywords = String(localized: "discovery_keywords")
 
 }

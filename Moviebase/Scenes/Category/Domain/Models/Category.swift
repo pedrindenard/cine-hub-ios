@@ -13,14 +13,6 @@ struct Category: Equatable, Identifiable {
     
     let name: String
     let items: [Media]
-    let type: CategoryType
-    
-}
-
-enum CategoryType: Equatable {
-    
-    case search
-    case carrousel
-    case banner
+    let endpoint: Endpoint
     
 }

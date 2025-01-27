@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-// MARK: - A type-erased wrapper for Routable
 struct AnyRoutable: Routable {
     
     private let base: any Routable

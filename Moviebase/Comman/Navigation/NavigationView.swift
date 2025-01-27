@@ -9,13 +9,19 @@ import SwiftUI
 
 struct NavigationView: View {
     
-    @StateObject var navigation: NavigationRouter = .init()
+    @StateObject private var rootCoordinator: NavigationRouter = .init()
     
-    let navigationStartDestination: () -> AnyView
+    let navigationStartDestination: (NavigationCoordinator) -> AnyView
     
     var body: some View {
-        NavigationStack(path: $navigation.paths) {
-            navigationStartDestination()
+        NavigationRouterView()
+            .environmentObject(rootCoordinator)
+    }
+    
+    @ViewBuilder
+    private func NavigationRouterView() -> some View {
+        NavigationStack(path: $rootCoordinator.paths) {
+            navigationStartDestination(rootCoordinator)
                 .navigationDestination(for: AnyRoutable.self) { router in router.makeView() }
         }
     }

@@ -6,3 +6,13 @@
 //
 
 typealias Paginable = Identifiable & Equatable
+
+enum PagerState {
+    case idle
+    
+    case loadingInitial
+    case loadingMore
+    
+    case endReached
+    case error
+}

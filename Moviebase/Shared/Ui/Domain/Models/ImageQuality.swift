@@ -21,8 +21,12 @@ enum ImageQuality: CustomStringConvertible {
     /// w300  image quality
     case small
     
+    /// w185  image quality
+    case compact
+    
     var dimen: String {
         switch self {
+        case .compact: "w154"
         case .small: "w300"
         case .medium: "w500"
         case .large: "w1280"

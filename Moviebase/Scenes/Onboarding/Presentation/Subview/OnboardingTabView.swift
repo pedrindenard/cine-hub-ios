@@ -86,5 +86,4 @@ struct OnboardingTabView: View {
                 .shadow()
         }
     }
-    
 }

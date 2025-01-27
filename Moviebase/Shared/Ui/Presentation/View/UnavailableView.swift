@@ -61,9 +61,23 @@ struct UnavailableView: View {
                 .padding(.horizontal, 24)
         } actions: {
             actions()
-        }.ignoresSafeArea(.all)
+        }
     }
     
+}
+
+struct UnavailableDescriptionView: View {
+    
+    var text: String = LocalizedString.buttonRetry
+    var action: () -> Void
+    
+    var body: some View {
+        ContentUnavailableView {} description: {
+            Text(LocalizedString.unavailableContentDescription).padding(.horizontal, 24)
+        } actions: {
+            UnavailableButtonView(action: action)
+        }
+    }
 }
 
 struct UnavailableButtonView: View {

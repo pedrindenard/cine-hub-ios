@@ -9,53 +9,51 @@ import SwiftUI
 
 struct CategoryView: View {
     
-    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
-    
-    @StateObject private var viewPager: SearchPagination = .search()
+    @StateObject private var viewPager: PagerQuery = .fetcher()
     @StateObject var viewModel: CategoryViewModel
     
-    @State private var isPresented: Bool = false
-    
     var body: some View {
-        Group {
-            if case ViewState.success(let categories) = viewModel.state {
-                CategoryNavigationView(categories: categories)
-                    .searchable(text: $viewPager.query, isPresented: $isPresented, prompt: LocalizedString.searchPrompt)
-                    .searchScopes($viewPager.scope) {
-                        ForEach(SearchScope.allCases) { scope in
-                            Text(scope.description)
-                        }
+        CategoryView().transition(.opacity)
+    }
+    
+    @ViewBuilder
+    private func CategoryView() -> some View {
+        if case ViewState.success(let categories) = viewModel.state {
+            CategoryNavigationView(categories: categories)
+                .searchable(text: $viewPager.query, isPresented: $viewModel.isSearching, prompt: LocalizedString.searchPrompt)
+                .searchScopes($viewPager.scope) {
+                    ForEach(SearchScope.allCases) { scope in
+                        Text(scope.description)
                     }
-                    .onChange(of: viewPager.scope) { _, scope in
-                        viewPager.updateEndpoint(scope.endpoint)
-                    }
-            }
-            
-            if case ViewState.error(let message) = viewModel.state {
-                CategoryErrorView(message: message)
-            }
-            
-            if case ViewState.loading = viewModel.state {
-                LoadingView()
-            }
+                }
+                .onChange(of: viewPager.scope) { _, scope in
+                    viewPager.updateEndpoint(scope.endpoint)
+                }
         }
-        .transition(.opacity)
+        
+        if case ViewState.error(let message) = viewModel.state {
+            CategoryErrorView(message: message)
+        }
+        
+        if case ViewState.loading = viewModel.state {
+            LoadingView()
+        }
     }
     
     @ViewBuilder
     private func CategoryNavigationView(categories: [Category]) -> some View {
-        if isPresented {
-            CategoryAdmView(pager: viewPager)
+        if viewModel.isSearching {
+            SearchView(viewPager: viewPager)
                 .toolbar(viewPager.query.isEmpty ? .visible : .hidden, for: .tabBar)
                 .toolbarAnimation(value: viewPager.query.isEmpty)
         } else {
-            CategoryView(categories: categories)
-                .toolbarBackground(horizontalSizeClass == .compact ? .hidden : .automatic, for: .navigationBar)
+            CategoryListView(categories: categories)
+                .contentMargins(.vertical, 16)
         }
     }
     
     @ViewBuilder
-    private func CategoryView(categories: [Category]) -> some View {
+    private func CategoryListView(categories: [Category]) -> some View {
         ScrollView(.vertical, showsIndicators: false) {
             LazyVStack(alignment: .leading) {
                 CategorySectionView(categories: categories)
@@ -66,10 +64,8 @@ struct CategoryView: View {
     @ViewBuilder
     private func CategorySectionView(categories: [Category]) -> some View {
         ForEach(categories) { category in
-            if category.type == .carrousel {
-                CategoryCarrouselView(category: category)
-            } else {
-                CategoryBannerView(category: category)
+            CategoryCarrouselView(category: category) {
+                viewModel.navigateToCategoryDetails(category)
             }
         }
     }
@@ -83,5 +79,5 @@ struct CategoryView: View {
 }
 
 #Preview {
-    CategoryView(viewModel: .init(mediaType: .tv))
+    CategoryView(viewModel: .mock)
 }

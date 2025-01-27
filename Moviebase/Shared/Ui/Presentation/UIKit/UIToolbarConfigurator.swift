@@ -7,11 +7,10 @@
 
 import SwiftUI
 
-extension View {
+struct ToolbarBackgroundColorStyle: ViewModifier {
     
-    @ViewBuilder
-    func toolbarBackgroundColor() -> some View {
-        self.onAppear {
+    func body(content: Content) -> some View {
+        content.onAppear {
             let tabAppearance = UITabBarAppearance()
             
             tabAppearance.backgroundColor = .systemGray4.withAlphaComponent(0.4)
@@ -26,22 +25,38 @@ extension View {
             
             tab.scrollEdgeAppearance = tabAppearance
             tab.standardAppearance = tabAppearance
-        }
+        }.tint(.accent)
+    }
+}
+
+struct ToolbarAnimation<T: Equatable>: ViewModifier {
+    
+    let value: T
+    
+    func body(content: Content) -> some View {
+        content.animation(.easeIn(duration: 0.2), value: value)
+    }
+}
+
+struct ToolbarHidden: ViewModifier {
+    
+    func body(content: Content) -> some View {
+        content.toolbarVisibility(.hidden)
+    }
+}
+
+extension View {
+    
+    func toolbarBackgroundStyle() -> some View {
+        self.modifier(ToolbarBackgroundColorStyle())
     }
     
-    @ViewBuilder
     func navigationToolbarVisibility() -> some View {
-        self.toolbarVisibility(.hidden)
+        self.modifier(ToolbarHidden())
     }
     
-    @ViewBuilder
-    func toolbarTint() -> some View {
-        self.tint(.blue)
-    }
-    
-    @ViewBuilder
     func toolbarAnimation<T: Equatable>(value: T) -> some View {
-        self.animation(.easeIn(duration: 0.2), value: value)
+        self.modifier(ToolbarAnimation(value: value))
     }
     
 }

@@ -46,10 +46,7 @@ private struct OnScrollingChangeViewModifier: ViewModifier {
 }
 
 extension View {
-    
-    @ViewBuilder
     func onScrollHidesBar() -> some View {
         self.modifier(OnScrollingChangeViewModifier())
     }
-    
 }

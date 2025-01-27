@@ -435,7 +435,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.screen.hub.ScreenHub;
+				PRODUCT_BUNDLE_IDENTIFIER = com.movie.app.Moviebase;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -465,7 +465,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.screen.hub.ScreenHub;
+				PRODUCT_BUNDLE_IDENTIFIER = com.movie.app.Moviebase;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -555,7 +555,7 @@
 				B946380C2D34AF6B00C17791 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		B946380D2D34AF6B00C17791 /* Build configuration list for PBXNativeTarget "Moviebase" */ = {
 			isa = XCConfigurationList;
@@ -564,7 +564,7 @@
 				B946380F2D34AF6B00C17791 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		B94638102D34AF6B00C17791 /* Build configuration list for PBXNativeTarget "MoviebaseTests" */ = {
 			isa = XCConfigurationList;
@@ -573,7 +573,7 @@
 				B94638122D34AF6B00C17791 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		B94638132D34AF6B00C17791 /* Build configuration list for PBXNativeTarget "MoviebaseUITests" */ = {
 			isa = XCConfigurationList;
@@ -582,7 +582,7 @@
 				B94638152D34AF6B00C17791 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 

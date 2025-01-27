@@ -8,46 +8,53 @@
 import Combine
 import SwiftUI
 
-@MainActor
 class CategoryViewModel : ObservableObject {
     
-    @Injected(\.categoryRepositoryProvider) private var repository: CategoryRepository
-    @Injected(\.categoryRouterProvider) private var router: CategoryViewRouter
-        
-    @Published var mediaType: MediaType = MediaType.movie
-    @Published var state: ViewState<[Category]> = ViewState.loading
+    @Injected(\.categoryRepository) private var repository: CategoryRepository
     
-    init(mediaType: MediaType) {
+    @Published private(set) var mediaType: MediaType
+    @Published private(set) var state: ViewState<[Category]> = .loading
+    @Published var isSearching: Bool = false
+
+    private let router: CategoryViewRouter
+    
+    init(router: CategoryViewRouter, mediaType: MediaType) {
         self.mediaType = mediaType
+        self.router = router
         self.getCategories()
     }
     
-    private func updateCategories() async {
-        self.updateState(ViewState.loading)
-        
-        do {
-            let categories = try await repository.getCategories(mediaType: mediaType)
+    func getCategories() {
+        Task(priority: TaskPriority.background) {
+            await self.updateState(ViewState.loading)
             
-            if categories.isEmpty {
-                self.updateState(.error(message: "TMDB server is offline"))
-            } else {
-                self.updateState(.success(result: categories))
+            do {
+                let categories = try await repository.getCategories(mediaType: mediaType)
+                
+                if categories.isEmpty {
+                    await self.updateState(.error(message: "TMDB server is offline"))
+                } else {
+                    await self.updateState(.success(result: categories))
+                }
+            } catch {
+                await self.updateState(.error(message: error.localizedDescription))
             }
-        } catch {
-            self.updateState(.error(message: error.localizedDescription))
         }
     }
     
+    func navigateToCategoryDetails(_ category: Category) {
+        self.router.routeToCategoryDetails(category: category)
+    }
+    
+    @MainActor
     private func updateState(_ newState: ViewState<[Category]>) {
         withAnimation(.easeIn) {
             self.state = newState
         }
     }
     
-    func getCategories() {
-        Task {
-            await self.updateCategories()
-        }
-    }
-    
+}
+
+extension CategoryViewModel {
+    static let mock: CategoryViewModel = .init(router: CategoryViewRouter.mock, mediaType: .movie)
 }

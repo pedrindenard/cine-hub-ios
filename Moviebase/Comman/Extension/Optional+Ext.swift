@@ -23,8 +23,8 @@ extension Optional where Wrapped == Bool {
     }
 }
 
-extension Optional where Wrapped == [Media] {
-    func orEmpty() -> [Media] {
+extension Optional where Wrapped: ExpressibleByArrayLiteral {
+    func orEmpty() -> Wrapped {
         return self ?? []
     }
 }

@@ -8,33 +8,55 @@
 import SwiftUI
 
 extension GeometryProxy {
-    
     var height: CGFloat { self.size.height }
     var width: CGFloat { self.size.width }
+}
+
+struct RoundedRectangleStyle: ViewModifier {
     
+    let cornerRadius: CGFloat
+    
+    func body(content: Content) -> some View {
+        content.background(
+            RoundedRectangle.rect(cornerRadius: cornerRadius).strokeBorder(lineWidth: 1)
+        )
+    }
+}
+
+struct ClipShapeStyle: ViewModifier {
+    
+    let cornerRadius: CGFloat
+    
+    func body(content: Content) -> some View {
+        content.clipShape(
+            RoundedRectangle.rect(cornerRadius: cornerRadius)
+        )
+    }
+}
+
+struct IgnoreSageAreaStyle: ViewModifier {
+    
+    let edges: Edge.Set
+    
+    func body(content: Content) -> some View {
+        content.ignoresSafeArea(
+            SafeAreaRegions.container, edges: edges
+        )
+    }
 }
 
 extension View {
     
-    @ViewBuilder
     func roundedRectangle(cornerRadius: CGFloat) -> some View {
-        self.background(
-            RoundedRectangle.rect(cornerRadius: cornerRadius).strokeBorder(lineWidth: 1)
-        )
+        self.modifier(RoundedRectangleStyle(cornerRadius: cornerRadius))
     }
     
-    @ViewBuilder
     func clipShape(cornerRadius: CGFloat) -> some View {
-        self.clipShape(
-            RoundedRectangle.rect(cornerRadius: cornerRadius)
-        )
+        self.modifier(ClipShapeStyle(cornerRadius: cornerRadius))
     }
     
-    @ViewBuilder
     func ignoreSafeArea(edges: Edge.Set) -> some View {
-        self.ignoresSafeArea(
-            SafeAreaRegions.container, edges: edges
-        )
+        self.modifier(IgnoreSageAreaStyle(edges: edges))
     }
     
 }

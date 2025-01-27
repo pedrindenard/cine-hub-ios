@@ -14,7 +14,4 @@ enum NetworkError: Error {
     case invalidResponse
     case badRequest
     
-    case noInternetConnection
-    case noData
-    
 }

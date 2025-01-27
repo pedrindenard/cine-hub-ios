@@ -7,28 +7,21 @@
 
 enum Endpoint: String {
     
-    // MARK: Category endpoints
     case trendingMovies = "trending/movie/day"
-    case trendingTvs = "trending/tv/day"
-    
     case playingNowMovies = "movie/now_playing"
-    case airingTodayTvs = "tv/airing_today"
-    
     case topRatedMovies = "movie/top_rated"
-    case topRatedTvs = "tv/top_rated"
-    
     case upcomingMovies = "movie/upcoming"
-    case onTheAirTvs = "tv/on_the_air"
-    
     case popularMovies = "movie/popular"
+    
+    case trendingTvs = "trending/tv/day"
+    case airingTodayTvs = "tv/airing_today"
+    case topRatedTvs = "tv/top_rated"
+    case onTheAirTvs = "tv/on_the_air"
     case popularTvs = "tv/popular"
     
-    // MARK: Search endpoints
     case searchPerson = "search/person"
-
     case searchMovie = "search/movie"
-    case searchTv = "search/tv"
-    
     case searchMulti = "search/multi"
+    case searchTv = "search/tv"
 
 }

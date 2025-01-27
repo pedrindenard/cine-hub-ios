@@ -17,4 +17,6 @@ struct LocalizedImages {
     static let imageAnimatedOnboarding2 = "Discovery"
     static let imageAnimatedOnboarding3 = "Movie"
     
+    static let systemExclamation = "exclamationmark.triangle.fill"
+    
 }

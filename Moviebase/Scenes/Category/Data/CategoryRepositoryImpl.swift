@@ -7,7 +7,7 @@
 
 class CategoryRepositoryImpl: CategoryRepository {
     
-    @Injected(\.categoryServiceProvider) private var service: CategoryService
+    @Injected(\.categoryService) private var service: CategoryService
     
     func getCategories(mediaType: MediaType) async throws -> [Category] {
         let endpoints = self.getEndpoints(for: mediaType)
@@ -20,25 +20,12 @@ class CategoryRepositoryImpl: CategoryRepository {
     
     private func getEndpoints(for mediaType: MediaType) -> [Endpoint] {
         return mediaType == .movie
-        ? [.trendingMovies, .popularMovies, .playingNowMovies, .topRatedMovies, .upcomingMovies]
-        : [.trendingTvs, .popularTvs, .airingTodayTvs, .topRatedTvs, .onTheAirTvs]
+        ? [.playingNowMovies, .trendingMovies, .upcomingMovies, .popularMovies, .topRatedMovies]
+        : [.airingTodayTvs, .trendingTvs, .onTheAirTvs, .popularTvs, .topRatedTvs]
     }
-        
+    
     private func createCategories(from results: [Endpoint: [Media]], mediaType: MediaType) -> [Category] {
-        let categories: [Category] = mediaType == .movie ? [
-            Category(name: LocalizedString.categoryTrending, items: results[.trendingMovies].orEmpty(), type: .banner),
-            Category(name: LocalizedString.categoryPopular, items: results[.popularMovies].orEmpty(), type: .carrousel),
-            Category(name: LocalizedString.categoryPlayingNow, items: results[.playingNowMovies].orEmpty(), type: .carrousel),
-            Category(name: LocalizedString.categoryTopRated, items: results[.topRatedMovies].orEmpty(), type: .carrousel),
-            Category(name: LocalizedString.categoryUpcoming, items: results[.upcomingMovies].orEmpty(), type: .carrousel)
-        ] : [
-            Category(name: LocalizedString.categoryTrending, items: results[.trendingTvs].orEmpty(), type: .banner),
-            Category(name: LocalizedString.categoryPopular, items: results[.popularTvs].orEmpty(), type: .carrousel),
-            Category(name: LocalizedString.categoryAiringToday, items: results[.airingTodayTvs].orEmpty(), type: .carrousel),
-            Category(name: LocalizedString.categoryTopRated, items: results[.topRatedTvs].orEmpty(), type: .carrousel),
-            Category(name: LocalizedString.categoryOnAir, items: results[.onTheAirTvs].orEmpty(), type: .carrousel)
-        ]
-                
+        let categories = mediaType == .movie ? CategoryMapper.mapToMovieCategories(results: results) : CategoryMapper.mapToTvCategories(results: results)
         return categories.filter { category in !category.items.isEmpty } // Remove any category that does not have 'items' populated
     }
     

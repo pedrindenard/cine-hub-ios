@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "AppLogoLight.png",
+      "filename" : "AppLogoAny 1.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -13,7 +13,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "AppLogoDark.png",
+      "filename" : "AppLogoAny.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -25,7 +25,7 @@
           "value" : "tinted"
         }
       ],
-      "filename" : "AppLogoTransparent.png",
+      "filename" : "AppLogoAny 2.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"

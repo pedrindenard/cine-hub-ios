@@ -5,25 +5,20 @@
 //  Created by Pedro Denardi Minuzzi on 14/01/25.
 //
 
-import Combine
 import Foundation
 
 extension NetworkRequest {
     
-    static func queue<T: Encodable, R: Decodable>(method: Method, endpoint: Endpoint, body: T) async throws -> Result<R, NetworkError> {
-        return try await queue(method: method, endpoint: endpoint, body: body, params: [])
-    }
-    
-    static func queue<T: Encodable, R: Decodable>(method: Method, endpoint: Endpoint, body: T, params: [URLQueryItem]) async throws -> Result<R, NetworkError> {
+    static func queue<T: Encodable, R: Decodable>(
+        baseUrl: BaseURL, method: Method, endpoint: Endpoint, body: T = EmptyBody(), params: [URLQueryItem] = []
+    ) async throws -> Result<R, NetworkError> {
         var attempt = 0
         var delay = 1
         
         while attempt < 5 {
             do {
-                if NetworkMonitor.shared.isNotConnected { throw NetworkError.noInternetConnection }
-                
-                let request = try makeRequest(method: method, endpoint: endpoint, body: body, params: params)
-                let response: R = try await performRequest(request)
+                let request = try NetworkProvider.makeRequest(method: method, baseUrl: baseUrl, endpoint: endpoint, body: body, params: params)
+                let response: R = try await NetworkProvider.performRequest(request)
                 
                 return Result.success(response)
             } catch {
@@ -39,29 +34,23 @@ extension NetworkRequest {
             }
         }
         
-        // This point will never be reached due to the repetition logic above
-        let error = NetworkError.badRequest
-        return Result.failure(error)
+        // This point will never be reached due to the loop logic above
+        throw NetworkError.badRequest
     }
     
-    static func queue<R: Decodable>(method: Method, endpoint: Endpoint, params: [URLQueryItem] = []) async throws -> Result<R, NetworkError> {
-        return try await queue(method: method, endpoint: endpoint, body: EmptyBody(), params: params)
-    }
-    
-    static func queue<R: Decodable>(method: Method, endpoint: Endpoint, params: [URLQueryItem] = []) async throws -> R {
+    static func queue<T: Encodable, R: Decodable>(
+        baseUrl: BaseURL, method: Method, endpoint: Endpoint, body: T = EmptyBody(), params: [URLQueryItem] = []
+    ) async throws -> R {
         var attempt = 0
         var delay = 1
         
         while attempt < 5 {
             do {
-                if NetworkMonitor.shared.isNotConnected { throw NetworkError.noInternetConnection }
-                
-                let request = try makeRequest(method: method, endpoint: endpoint, body: EmptyBody(), params: params)
-                let response: R = try await performRequest(request)
+                let request = try NetworkProvider.makeRequest(method: method, baseUrl: baseUrl, endpoint: endpoint, body: body, params: params)
+                let response: R = try await NetworkProvider.performRequest(request)
                 
                 return response
             } catch {
-                print("Error: \(error.localizedDescription)")
                 attempt += 1
                 
                 if attempt >= 5 {
