@@ -23,5 +23,8 @@ enum Endpoint: String {
     case searchMovie = "search/movie"
     case searchMulti = "search/multi"
     case searchTv = "search/tv"
+    
+    case genresMovie = "genre/movie/list"
+    case genresTv = "genre/tv/list"
 
 }

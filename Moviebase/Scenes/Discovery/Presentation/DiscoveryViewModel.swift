@@ -21,8 +21,12 @@ class DiscoveryViewModel: ObservableObject {
         self.items = repository.getCategories()
     }
     
-    func navigateToDiscoveryDetails(_ discoveryType: DiscoveryType) {
-        self.router.routeToDiscoveryDetails(discoveryType: discoveryType)
+    func navigateTo(_ discoveryType: DiscoveryType) {
+        if discoveryType == .genresMovie || discoveryType == .genresTv {
+            self.router.routeToDiscoveryGenres(discoveryType: discoveryType)
+        } else {
+            self.router.routeToDiscoveryDetails(discoveryType: discoveryType)
+        }
     }
     
 }

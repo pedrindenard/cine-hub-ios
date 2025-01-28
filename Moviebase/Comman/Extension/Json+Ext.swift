@@ -1,8 +1,8 @@
 //
-//  JsonReader.swift
+//  Json+Ext.swift
 //  Moviebase
 //
-//  Created by Pedro Denardi Minuzzi on 27/01/25.
+//  Created by Pedro Denardi Minuzzi on 28/01/25.
 //
 
 import Foundation

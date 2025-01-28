@@ -54,7 +54,7 @@ struct DiscoveryView: View {
                 LazyVGrid(columns: columns) {
                     ForEach(viewModel.items) { discovery in
                         DiscoveryCardView(discovery) {
-                            viewModel.navigateToDiscoveryDetails(discovery.type)
+                            viewModel.navigateTo(discovery.type)
                         }
                     }
                 }

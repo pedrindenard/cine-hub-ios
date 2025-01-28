@@ -21,12 +21,12 @@ struct DiscoveryNetworkView: View {
     }
     
     var body: some View {
-        VStack {
+        VStack(alignment: .center) {
             AsyncImageView(quality: .small, path: image)
                 .asyncImageScaleToFit(.ratio1_1)
                 .padding(.horizontal, 8)
                 .padding(.vertical, 8)
-                .asyncImageBackgroundGray()
+                .background(Color.adaptiveGray)
                 .asyncImageStyle()
             
             AsyncTextView(name: name)

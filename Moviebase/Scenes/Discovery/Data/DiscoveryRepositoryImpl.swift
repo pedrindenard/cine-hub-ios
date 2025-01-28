@@ -11,8 +11,8 @@ class DiscoveryRepositoryImpl: DiscoveryRepository {
         let categories = [
             Discovery(name: LocalizedString.discoveryMovies, systemName: "film", type: .collections),
             Discovery(name: LocalizedString.discoveryTv, systemName: "tv", type: .collections),
-            Discovery(name: LocalizedString.discoveryMovieGenres, systemName: "list.bullet", type: .collections),
-            Discovery(name: LocalizedString.discoveryTvGenres, systemName: "list.bullet.rectangle", type: .collections),
+            Discovery(name: LocalizedString.discoveryMovieGenres, systemName: "list.bullet", type: .genresMovie),
+            Discovery(name: LocalizedString.discoveryTvGenres, systemName: "list.bullet.rectangle", type: .genresTv),
             Discovery(name: LocalizedString.discoveryPeoples, systemName: "person.2", type: .collections),
             Discovery(name: LocalizedString.discoveryFilter, systemName: "line.horizontal.3.decrease.circle", type: .collections),
             Discovery(name: LocalizedString.discoveryProductionCompanies, systemName: "building.2", type: .companies),

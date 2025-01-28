@@ -26,6 +26,11 @@ extension DiscoveryViewRouter: Routable {
         rootCoordinator.push(router)
     }
     
+    func routeToDiscoveryGenres(discoveryType: DiscoveryType) {
+        let router = GenresViewRouter(rootCoordinator: self.rootCoordinator, genres: discoveryType.genres)
+        rootCoordinator.push(router)
+    }
+    
     func makeView() -> AnyView {
         let viewModel = DiscoveryViewModel(router: self)
         let view = DiscoveryView(viewModel: viewModel)

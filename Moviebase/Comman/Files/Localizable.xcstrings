@@ -409,6 +409,9 @@
         }
       }
     },
+    "Movie screen type: %@" : {
+
+    },
     "onboarding_description_1" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -510,6 +513,9 @@
           }
         }
       }
+    },
+    "Person screen type: %@" : {
+
     },
     "search_idle_description" : {
       "extractionState" : "manual",
@@ -765,6 +771,9 @@
           }
         }
       }
+    },
+    "TV Show screen type: %@" : {
+
     },
     "unavailable_content_description" : {
       "extractionState" : "manual",

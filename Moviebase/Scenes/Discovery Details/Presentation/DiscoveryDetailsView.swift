@@ -14,9 +14,9 @@ struct DiscoveryDetailsView: View {
     
     private var columns: [GridItem] {
         if horizontalSizeClass == .compact {
-            Array(repeating: GridItem(.flexible()), count: 3)
+            Array(repeating: GridItem(.flexible()), count: viewModel.discoveryType.compact)
         } else {
-            Array(repeating: GridItem(.flexible()), count: 6)
+            Array(repeating: GridItem(.flexible()), count: viewModel.discoveryType.regular)
         }
     }
     
@@ -31,19 +31,7 @@ struct DiscoveryDetailsView: View {
         ScrollView {
             LazyVGrid(columns: columns) {
                 ForEach(viewModel.items) { item in
-                    if case .companies = viewModel.discoveryType {
-                        DiscoveryNetworkView(name: item.name, image: item.image) {
-                            
-                        }
-                    } else if case .networks = viewModel.discoveryType {
-                        DiscoveryNetworkView(name: item.name, image: item.image) {
-                            
-                        }
-                    } else if case .collections = viewModel.discoveryType {
-                        Text(item.name)
-                    } else if case .keywords = viewModel.discoveryType {
-                        Text(item.name)
-                    }
+                    DiscoveryItemView(item: item)
                 }
                 .padding(.horizontal, 4)
                 .padding(.vertical, 4)
@@ -54,6 +42,26 @@ struct DiscoveryDetailsView: View {
         .contentMargins(.vertical, 16)
     }
     
+    @ViewBuilder
+    private func DiscoveryItemView(item: DiscoveryItem) -> some View {
+        if case .companies = viewModel.discoveryType {
+            DiscoveryNetworkView(name: item.name, image: item.image) {
+                
+            }
+        } else if case .networks = viewModel.discoveryType {
+            DiscoveryNetworkView(name: item.name, image: item.image) {
+                
+            }
+        } else if case .collections = viewModel.discoveryType {
+            DiscoveryCollectionView(name: item.name, image: item.image) {
+                
+            }
+        } else if case .keywords = viewModel.discoveryType {
+            DiscoveryKeywordView(name: item.name) {
+                
+            }
+        }
+    }
 }
 
 #Preview {

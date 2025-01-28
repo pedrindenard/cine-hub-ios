@@ -17,6 +17,12 @@ extension Optional where Wrapped == Double {
     }
 }
 
+extension Optional where Wrapped == Int {
+    func orEmpty() -> Int {
+        return self ?? 0
+    }
+}
+
 extension Optional where Wrapped == Bool {
     func orEmpty() -> Bool {
         return self ?? false

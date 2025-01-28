@@ -31,8 +31,8 @@ struct CategoryView: View {
                 }
         }
         
-        if case ViewState.error(let message) = viewModel.state {
-            CategoryErrorView(message: message)
+        if case ViewState.error = viewModel.state {
+            CategoryErrorView()
         }
         
         if case ViewState.loading = viewModel.state {
@@ -71,7 +71,7 @@ struct CategoryView: View {
     }
     
     @ViewBuilder
-    private func CategoryErrorView(message: String) -> some View {
+    private func CategoryErrorView() -> some View {
         UnavailableView {
             viewModel.getCategories()
         }

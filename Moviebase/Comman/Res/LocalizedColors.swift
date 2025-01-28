@@ -31,3 +31,9 @@ struct LocalizedColor {
     static let shadow = Color("Shadow")
     
 }
+
+extension Color {
+    static let adaptiveGray = Color(
+        UIColor { _ in UIColor(white: 0.8, alpha: 1.0) }
+    )
+}

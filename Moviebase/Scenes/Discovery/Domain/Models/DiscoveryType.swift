@@ -12,13 +12,35 @@ enum DiscoveryType: String {
     
     case networks = "networks"
     case keywords = "keywords"
-
+    
+    case genresMovie = "genres_movie"
+    case genresTv = "genres_tv"
+    
     var description: String {
         switch self {
-        case .collections: "Collections"
-        case .companies: "Companies"
-        case .networks: "Networks"
-        case .keywords: "Keywords"
+        case .collections: LocalizedString.discoveryCollections
+        case .companies: LocalizedString.discoveryProductionCompanies
+        case .networks: LocalizedString.discoveryTvNetworks
+        case .keywords: LocalizedString.discoveryKeywords
+        default: ""
+        }
+    }
+    
+    var compact: Int {
+        switch self {
+        case .collections: 2
+        case .companies: 3
+        case .networks: 3
+        default: 1
+        }
+    }
+    
+    var regular: Int {
+        switch self {
+        case .collections: 4
+        case .companies: 6
+        case .networks: 6
+        default: 2
         }
     }
     
